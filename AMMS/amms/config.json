@@ -1,4 +1,4 @@
 {
   "SECRET_KEY": "JVE73DJD84HG9EW65NNVKE777JDSBB47W",
-  "SQLALCHEMY_DATABASE_URI": "sqlite://sqlite.db"
+  "SQLALCHEMY_DATABASE_URI": "sqlite:///sqlite.db"
 }
