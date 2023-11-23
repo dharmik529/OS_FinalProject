@@ -11,11 +11,11 @@ def create_app(config_class=Config):
 
     db.init_app(app)
 
-    from amms.users.routes import users
+    #from amms.users.routes import users
     from amms.main.routes import main
-    from amms.errors.handlers import errors
-    app.register_blueprint(users)
+    #from amms.errors.handlers import errors
+    #app.register_blueprint(users)
     app.register_blueprint(main)
-    app.register_blueprint(errors)
+    #app.register_blueprint(errors)
 
     return app
