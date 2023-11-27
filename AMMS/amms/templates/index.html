@@ -4,11 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <title>Home Page</title>
 </head>
 
 <body>
-    <h1>FLASK APP</h1>
-</body>
+    <header>
+      <h1>Reminders for Seniors</h1>
+    </header>
+    <main>
+      <h2>Never Forget Again</h2>
+      <p>As we get older, it can become harder to remember all the things we need to do. Missed medical appointments, forgetting to take medications, or neglecting important financial deadlines can have serious consequences.</p>
+      <p>That's why we created this simple web app - to provide helpful reminders to seniors so you never have to worry about forgetting essential tasks and events again!</p>
+      <h3>How It Works</h3>
+      <ol>
+        <li>Create a secure user profile</li>
+        <li>Input your upcoming appointments, medication schedules, bill due dates etc.</li>
+        <li>Receive reminder notifications by email or text message</li>
+        <li>Mark reminders as completed or reschedule if needed</li>
+      </ol>
+      <p>Customize reminders to suit your needs. Set daily, weekly or one-time alerts. We handle the details so you can focus on living life to the fullest!</p>
+      <a href="sign-up.html">Sign up now to start getting helpful reminders</a>
+
+    </main>
+    <footer>
+      <p>&copy;2023 Reminders for Seniors</p>
+    </footer>
+  </body>
 
 </html>
