@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Home Page</title>
-</head>
-
-<body>
+{% extends "layout.html" %}
+{% block content %}
     <header>
       <h1>Reminders for Seniors</h1>
     </header>
@@ -24,12 +15,11 @@
         <li>Mark reminders as completed or reschedule if needed</li>
       </ol>
       <p>Customize reminders to suit your needs. Set daily, weekly or one-time alerts. We handle the details so you can focus on living life to the fullest!</p>
-      <a href="sign-up.html">Sign up now to start getting helpful reminders</a>
+      <a href="{{ url_for('users.register') }}">Sign up now to start getting helpful reminders</a>
 
     </main>
     <footer>
       <p>&copy;2023 Reminders for Seniors</p>
     </footer>
-  </body>
 
-</html>
+    {% endblock content %}

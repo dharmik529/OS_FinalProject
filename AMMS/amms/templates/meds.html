@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for med in meds.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2">{{ med.medication_date }} @ {{ med.medication_time }}</a>
+            </div>
+            <h2><a class="article-title">{{ med.medication_name }}</a></h2>
+            <p class="article-content">{{ med.medication_dose }}</p>
+          </div>
+        </article>
+    {% endfor %}
+    {% for page_num in meds.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if meds.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('medication.home', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('medication.home', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}
