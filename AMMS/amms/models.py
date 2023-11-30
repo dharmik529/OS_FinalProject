@@ -38,5 +38,9 @@ class Medication(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     medication_name = db.Column(db.String(250), nullable=False)
     medication_dose = db.Column(db.Integer, nullable=False)
-    medication_date = db.Column(db.String(250), nullable=False)
-    medication_time = db.Column(db.String(250), nullable=False)
+    medication_datetime = db.Column(db.DateTime, nullable=False)
+
+class Reminder(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    reminder_datetime = db.Column(db.String(50))
+    message = db.Column(db.String(250))

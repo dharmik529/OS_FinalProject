@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from amms import db, bcrypt
+from amms import db
 from amms.medication.forms import (NewMedicationForm)
 from amms.models import Medication
 

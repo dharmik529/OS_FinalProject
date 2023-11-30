@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Reminders</h1>
+    <ul>
+        {% for reminder in reminders %}
+            <li>{{ reminder['time'] }} - {{ reminder['message'] }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{{ url_for('reminder.add_reminder') }}">
+        <label for="time">Time:</label>
+        <input type="text" name="time" required>
+        <label for="message">Message:</label>
+        <input type="text" name="message" required>
+        <button type="submit">Add Reminder</button>
+    </form>
+{% endblock content %}
