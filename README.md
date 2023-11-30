@@ -14,13 +14,22 @@
 <h4 align="center"> By Love Patel and Dharmik Patel</h5>
 
 ## ❖ Table of Contents
-- [Installation and Usage Instructions](#installation-and-usage-instructions)
-- [Project Overview](#project-overview)
-- [Project Goals](#project-goals)
-- [Significance of the Project](#significance-of-the-project)
-- [Code Structure](#code-structure)
-- [Functionality and Test Results](#functionality-and-test-results)
-- [Discussion and Conclusions](#discussion-and-conclusions)
+- [](#)
+  - [Project Overview](#project-overview)
+  - [Project Goals](#project-goals)
+  - [Significance of the Project](#significance-of-the-project)
+  - [Code Structure](#code-structure)
+    - [The code is structured as follows:](#the-code-is-structured-as-follows)
+  - [Functionality and Test Results](#functionality-and-test-results)
+    - [Functionalities](#functionalities)
+      - [1. **Reminder Management:**](#1-reminder-management)
+      - [2. **Health Data Tracking:**](#2-health-data-tracking)
+      - [3. **User-Friendly Web GUI:**](#3-user-friendly-web-gui)
+      - [4. **Bridging Digital Divide:**](#4-bridging-digital-divide)
+  - [Discussion and Conclusions](#discussion-and-conclusions)
+    - [Project Issues and Limitations:](#project-issues-and-limitations)
+    - [Application of Course Learnings:](#application-of-course-learnings)
+    - [Future Improvements:](#future-improvements)
 
 ## Installation and Usage Instructions
 ### ❖ Pre-Requirements
@@ -49,14 +58,14 @@ poetry shell
 ```bash
 poetry install
 ```
-#### 4. Install the packages and dependencies in the virtual env
+#### 4. To run the whole project, run the command below
 ```bash
-poetry install
+python3 run.py
 ```
 
 ### Usage Instructions
 #
-### General Reminders
+<!-- ### General Reminders
 
 #### Adding a General Reminder:
 - Navigate to the "General Reminders" section.
@@ -104,13 +113,9 @@ poetry install
 
 - Click on "Check Your Health Metrics!!" to access the Health Metrics page and refresh the data.
 #
-### Note:
-
-- The time format for reminders is in 24-hour (military) format. Ensure to input the time accordingly; otherwise, the program won't accept the input.
-#
 ### Closing the App
 
-- To stop the application, press Ctrl+C in the terminal where the Flask app is running.
+- To stop the application, press Ctrl+C in the terminal where the Flask app is running. -->
 ## Project Overview
 
 This project aims to develop a software application designed to assist the elderly in managing their health and daily tasks efficiently. The application serves as a reminder system for medication, appointments, and other crucial tasks. Additionally, it includes a health tracking feature allowing users to input and monitor vital health metrics such as blood pressure and heart rate.
