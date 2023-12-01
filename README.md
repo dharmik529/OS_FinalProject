@@ -124,7 +124,7 @@ This Flask project incorporates several Operating System (OS) concepts:
 
 1. **Threads:** Utilized for asynchronous tasks, such as scheduling reminders and checking health metrics, to prevent blocking the main application.
 
-2. **File Handling:** Reading and writing JSON files to store and retrieve reminders, medications, appointments, and health metrics.
+2. **File Handling:** Reading and writing sqlite.db files to store and retrieve reminders, medications, appointments, and health metrics.
 
 3. **Synchronization:** Implementing locks (`threading.Lock`) to manage access to shared resources (e.g., reminders and health metrics) to avoid data corruption when multiple threads access them concurrently.
 
@@ -201,25 +201,16 @@ These concepts work together to facilitate the functioning of the application, m
 
 ### The code is structured as follows:
 
-**app.py:**
+**amms/__init__.py**
 
 - Implements a Flask web application to manage reminders and health metrics.
-- Defines routes for different functionalities (add, delete, display reminders, health tracker).
-- Uses JSON files to store reminders and health metrics.
+- Imports routes for different functionalities (add, delete, display reminders, health tracker).
+- Initializes the SQLite3 database.
 
-**index.html:**
-- This structured HTML file is main home page from where user will chose where to redirect.
-- The use of Tailwind CSS contributes to a visually appealing, animations and responsive design.
-- The integrated JavaScript includes importing icons and loading.
-
-**reminder.html:**
-- This structured HTML file ensures a clear organization of the user interface components, including forms for adding reminders, displaying existing reminders, and facilitating user interaction.
-- The use of Tailwind CSS contributes to a visually appealing and responsive design.
-- The integrated JavaScript enhances the user experience by allowing the deletion of reminders without the need for page refresh.
-
-**health.html:**
-- This structured HTML file is made for health metrics page of the app. 
-- It has container for health tracking with a reminder card, health tracking form for adding metrics, search feature for filtering metrics by date, list displaying existing health metrics, and javascript functions for searching, displaying, and deleting health records.
+**templates/*.html:**
+- The HTML files provide a simple front-end ui to display information.
+- Sidebar shows upcoming reminders
+- Users can create new medications and reminders
 
 **Note:**
 

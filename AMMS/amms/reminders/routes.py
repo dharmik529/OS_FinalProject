@@ -5,24 +5,26 @@ from amms import db
 import subprocess
 import time
 
-reminders = []
+rems = []
 
 reminder = Blueprint('reminder', __name__)
 
 def reminder_handler():
     while True:
-        for reminder in reminders:
+        for reminder in rems:
             current_time = time.strftime("%H:%M")
             if current_time == reminder['time']:
                 subprocess.run(["notify-send", "Reminder", reminder['message']])
-                reminders.remove(reminder)
+                rems.remove(reminder)
+                db.session.delete(reminder)
+                db.session.commit()
         time.sleep(60)
 
 @reminder.route('/reminderHome', methods=['GET', 'POST'])
 def reminderHome():
-    page = request.args.get('page', 1, type=int)
-    rems = Reminder.query.order_by(Reminder.id)
-    return render_template('reminders.html', reminders=reminders)
+    rems = Reminder.query.all()
+    print(rems[0].message)
+    return render_template('reminders.html', reminders=rems)
 
 @reminder.route('/add_reminder', methods=['POST'])
 def add_reminder():
@@ -33,6 +35,6 @@ def add_reminder():
         rmndr = Reminder(reminder_datetime = time, message=message)
         db.session.add(rmndr)
         db.session.commit()
-        reminders.append({'time': time, 'message': message})
+        rems.append({'time': time, 'message': message})
     
     return redirect(url_for('reminder.reminderHome'))

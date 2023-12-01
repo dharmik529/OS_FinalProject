@@ -3,7 +3,7 @@
 <h1>Reminders</h1>
     <ul>
         {% for reminder in reminders %}
-            <li>{{ reminder['time'] }} - {{ reminder['message'] }}</li>
+            <li>{{ reminder.reminder_datetime }} - {{ reminder.message }}</li>
         {% endfor %}
     </ul>
 
