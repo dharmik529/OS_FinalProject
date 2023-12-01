@@ -19,8 +19,8 @@ def newMedication():
         medication = Medication(medication_name=form.medication_name.data, medication_dose=form.medication_dose.data, medication_date=form.medication_date.data, medication_time=form.medication_time.data)
         db.session.add(medication)
         db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('users.login'))
+        flash('Your Medication was created', 'success')
+        return redirect(url_for('medication.home'))
     return render_template('newMedication.html', title='Register', form=form)
 
 @medication.route("/deleteMed/<int:id>", methods=['GET', 'POST'])
