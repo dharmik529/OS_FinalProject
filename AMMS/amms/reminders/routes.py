@@ -23,7 +23,6 @@ def reminder_handler():
 @reminder.route('/reminderHome', methods=['GET', 'POST'])
 def reminderHome():
     rems = Reminder.query.all()
-    print(rems[0].message)
     return render_template('reminders.html', reminders=rems)
 
 @reminder.route('/add_reminder', methods=['POST'])
