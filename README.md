@@ -13,25 +13,10 @@
 </div>
 <h4 align="center"> By Love Patel and Dharmik Patel</h5>
 
-## ❖ Table of Contents
-- [](#)
-  - [Project Overview](#project-overview)
-  - [Project Goals](#project-goals)
-  - [Significance of the Project](#significance-of-the-project)
-  - [Code Structure](#code-structure)
-    - [The code is structured as follows:](#the-code-is-structured-as-follows)
-  - [Functionality and Test Results](#functionality-and-test-results)
-    - [Functionalities](#functionalities)
-      - [1. **Reminder Management:**](#1-reminder-management)
-      - [2. **Health Data Tracking:**](#2-health-data-tracking)
-      - [3. **User-Friendly Web GUI:**](#3-user-friendly-web-gui)
-      - [4. **Bridging Digital Divide:**](#4-bridging-digital-divide)
-  - [Discussion and Conclusions](#discussion-and-conclusions)
-    - [Project Issues and Limitations:](#project-issues-and-limitations)
-    - [Application of Course Learnings:](#application-of-course-learnings)
-    - [Future Improvements:](#future-improvements)
 
-## Installation and Usage Instructions
+
+
+## Installation
 ### ❖ Pre-Requirements
 #### 1. Ensure you have Python 3.11.6 installed. You can download Python 3.11.6 from the official Python website
 [Python Downloads page](https://www.python.org/downloads/)
@@ -63,236 +48,366 @@ poetry install
 python3 run.py
 ```
 
-### Usage Instructions
-#
-<!-- ### General Reminders
+## ❖ Usage Instructions
+#### Login & Register System:
+- Navigate to the home page.
+- Click on "Register" in the top right of the home page.
+- Enter the details in the form such as username, email, password
+- Once that is done, go to Login and enter the email and password to login.
 
-#### Adding a General Reminder:
-- Navigate to the "General Reminders" section.
-- Enter the reminder details: reminder text, date, and time in 24-hour format.
-- Click "Set Reminder" to add the reminder.
+#### Reminder System:
+- There are 2 sections for this. There is a page where you can see all your reminders scheduled, and the form to schedule a new reminder.
+- To schedule a new reminder, naviate to the top menu bar in app and click "new reminder"
+- Fill out the form accordingly to add the reminder to the database.
 
-#### Deleting a General Reminder:
-- In the list of general reminders, click the "Delete" button next to the reminder you want to remove.
-#
-### Medication Reminders
+#### Medication System:
+- Navigate to the home page.
+- There are 2 sections for this. There is a page where you can see all your medications, and the form to add a new medication.
+- To add a new medication, naviate to the top menu bar in app and click "new medication"
+- Fill out the form accordingly to add the medication to the database.
 
-#### Adding a Medication Reminder:
-- Go to the "Medication Reminders" section.
-- Enter medication details: name, dose, date, and select reminder times.
-- Click "Add Medication Reminder" to add the medication and set reminders.
+## ❖ Project Overview
 
-#### Deleting a Medication Reminder:
-- In the list of medication reminders, click the "Delete" button next to the medication you want to remove.
-#
-### Appointment Reminders
-
-#### Adding an Appointment Reminder:
-- Visit the "Appointment Reminders" section.
-- Enter appointment details: text, date, and time in 24-hour format.
-- Click "Set Appointment Reminder" to add the appointment.
-
-#### Deleting an Appointment Reminder:
-- In the list of appointment reminders, click the "Delete" button next to the appointment you want to remove.
-#
-### Health Metrics Tracking
-
-#### Adding Health Metrics:
-- Go to the "Health Tracking" section.
-- Enter health metrics: date, blood pressure, heart rate, and an optional additional metric.
-- Click "Add Health Metrics" to record the health data.
-
-#### Searching Health Metrics:
-- Use the "Search by Date" input to find health metrics for a specific date.
-- Click "Search" to display metrics for the selected date.
-
-#### Deleting Health Records:
-- In the list of health metrics, click the "Delete" button next to the record you want to remove.
-#
-### Refreshing Data
-
-- Click on "Check Your Health Metrics!!" to access the Health Metrics page and refresh the data.
-#
-### Closing the App
-
-- To stop the application, press Ctrl+C in the terminal where the Flask app is running. -->
-## Project Overview
-
-This project aims to develop a software application designed to assist the elderly in managing their health and daily tasks efficiently. The application serves as a reminder system for medication, appointments, and other crucial tasks. Additionally, it includes a health tracking feature allowing users to input and monitor vital health metrics such as blood pressure and heart rate.
+The Automated Medication Management System is designed to empower elderly individuals to effectively manage their medication schedules. It features a user-friendly interface that provides reminders for prescribed doses and tracks medication consumption to ensure adherence and overall well-being. This system leverages advanced Operating System concepts like process scheduling and interprocess communication, ensuring timely reminders and seamless coordination between its various components.
 
 This Flask project incorporates several Operating System (OS) concepts:
 
-1. **Threads:** Utilized for asynchronous tasks, such as scheduling reminders and checking health metrics, to prevent blocking the main application.
+1. **Threads:** Flask app uses the Werkzeug WSGI server by default which relies on threads to handle incoming HTTP requests. When a request comes in, the server spawns a new thread instead of blocking the main thread or processing sequentially. This allows multiple clients to connect concurrently. The `reminder_handler` function likely executes within a dedicated thread spawned by the scheduler. This enables it to run independently and concurrently with the web server threads.
 
-2. **File Handling:** Reading and writing sqlite.db files to store and retrieve reminders, medications, appointments, and health metrics.
+   In summary, threads promote concurrency for the web server, background jobs, and database access. The GIL and synchronization primitives ensure thread safety. 
 
-3. **Synchronization:** Implementing locks (`threading.Lock`) to manage access to shared resources (e.g., reminders and health metrics) to avoid data corruption when multiple threads access them concurrently.
+2. **Process Management**: The Flask application creates a web server process to handle HTTP requests from users. This allows multiple users to interact with the web app simultaneously through isolated processes per client connection. When a request comes in, a thread is allocated from the process thread pool to handle execution. In addition, the background reminder_handler function runs as a separate continually executing process for scheduling notifications. This allows reminders to run independently from the main web server workload. Python's GIL allows these multi-processed workflows.
 
-4. **Process Control:** Flask handles multiple HTTP requests and responses as separate processes to manage the web application's functionalities.
+3. **File Handling:** Reading and writing sqlite.db files to store and retrieve reminders, medications, and user data. This gives each user their own unique page that is tailored to their needs, and allows for a more variable usage.
 
-5. **Timers and Polling:** Employing time-based functions (`time.sleep()`) for scheduling reminders and continuously checking the current time against scheduled reminder times.
+4. **Synchronization:** Implementing locks to manage access to shared resources (e.g., reminders and medications) to avoid data corruption when multiple threads access them concurrently. This allows for better access to medications and reminders in a time priority manner.
 
-6. **Inter-Process Communication (IPC):** Using HTTP methods like POST, GET, and DELETE for communication between the client (browser) and the server (Flask application) to perform actions like adding reminders, deleting records, and retrieving health metrics.
+5. **Inter-Process Communication (IPC):** Using HTTP methods like POST, GET, and DELETE for communication between the client (browser) and the server (Flask application) to perform actions like adding reminders, deleting records, and retrieving health metrics. The web application process coordinates with the independently executing reminder handler process using an in-memory data structure that acts as a shared queue. When new reminders are added via the web UI, they are appended to this queue accessible by both processes. This queue-based signaling allows loose coupling.
 
-These concepts work together to facilitate the functioning of the application, manage data, handle user requests, and ensure concurrent operations without conflicts or data loss.
-
-## Project Goals
-
-1. **Enhance Daily Task Management:**
-   - **Objective:** Develop a user-friendly interface to enable elderly individuals to easily add, view, and manage daily reminders for tasks, appointments, health metrics, and medication schedules.
-   - **Rationale:** Empowering users to organize their daily activities fosters a sense of independence and reduces stress associated with memory lapses.
-
-2. **Facilitate Health Data Tracking:**
-   - **Objective:** Implement a system for tracking and recording health metrics, including blood pressure and heart rate, allowing users to monitor their health over time.
-   - **Rationale:** Providing a tool for health data tracking contributes to proactive health management and encourages individuals to stay informed about their well-being.
-
-3. **Ensure User-Friendly Interface:**
-   - **Objective:** Design a graphical user interface (GUI) that is intuitive, accessible, and tailored to the needs of the elderly population.
-   - **Rationale:** An easy-to-use interface ensures that the project is inclusive, accommodating users with varying levels of technological familiarity.
-
-4. **Implement Persistent Data Storage:**
-   - **Objective:** Develop mechanisms for persistent storage of reminders and health data, allowing users to access historical information.
-   - **Rationale:** Persistent storage ensures that users can review past information, aiding in continuity of care and promoting long-term health tracking.
-
-5. **Support Caregiver Collaboration:**
-   - **Objective:** Provide features that allow caregivers to remotely view and manage reminders, fostering collaboration and support for elderly individuals.
-   - **Rationale:** Inclusion of caregiver features ensures a holistic approach to elderly care, involving family members or support networks in the well-being of the user.
-
-6. **Promote Mental Health Awareness:**
-   - **Objective:** Implement features that encourage users and caregivers to stay aware of mental health through health data trends and proactive reminders.
-   - **Rationale:** By promoting mental health awareness, the project contributes to a holistic approach to well-being, considering both physical and mental health aspects.
-
-7. **Bridge Generational Digital Divide:**
-   - **Objective:** Introduce technology in a manner that is accessible to older individuals, bridging the digital divide and ensuring inclusivity.
-   - **Rationale:** Making technology accessible fosters social connection, reduces isolation, and encourages the elderly to engage with modern tools for their benefit.
-
-8. **Create a Collaborative Health Ecosystem:**
-   - **Objective:** Establish a platform that encourages collaboration among users, caregivers, and healthcare professionals, creating a supportive health ecosystem.
-   - **Rationale:** Collaboration ensures a comprehensive approach to health management, involving multiple stakeholders for the benefit of the elderly individual.
+6. **Memory Management**: Python's memory manager implements heap allocation using a private heap space per interpreter process. When objects like medication log entries are created, memory is allocated on the heap. Periodic garbage collection frees up unused memory by releasing objects no longer referenced. This prevents leaks over long-running processes. Flask's stack manages request context data lifecycles.
 
 
-## Significance of the Project
+## ❖ Project Goals
+The goal of this project is to create a software application that enhances the happiness and well-being of elderly individuals by aiding in their medication management. This involves applying knowledge and skills acquired in CMPSC 472 to develop a practical, user-friendly solution.
 
-1. **Improved Quality of Life:**
-   - The project addresses the specific needs of the elderly by providing a user-friendly interface for managing reminders and health data.
-   - By assisting in the organization of daily tasks and health-related information, the project contributes to an improved quality of life for the elderly.
+1. **Enhance Medication Management with Secure User Authentication:**
+    - **Objective:** Implement robust user authentication using Flask-Login to enable elderly users to securely sign up and log in. This ensures a safe and personalized environment for managing medication schedules and reminders.
+    - **Rationale:** Empower elderly individuals in medication management, alleviating stress associated with memory challenges and providing a tailored, secure user experience.
 
-2. **Enhanced Independence:**
-   - Empowering the elderly to manage their reminders and health metrics fosters a sense of independence.
-   - The ability to add, view, and delete reminders or track health metrics autonomously promotes self-sufficiency.
+2. **Facilitate Comprehensive Medication Tracking:**
+    - **Objective:** Develop a sophisticated system for tracking and recording medication details, encompassing medication name, dose, date, and time. This empowers users to actively monitor and manage their medication history.
+    - **Rationale:** Promote proactive health management and assist users in adhering to medication schedules for improved overall well-being.
 
-3. **Reduced Anxiety and Stress:**
-   - The project helps in minimizing the anxiety and stress associated with memory lapses or missed appointments.
-   - Reminders serve as proactive prompts, alleviating concerns about forgetting essential tasks or medications.
+3. **Craft an Intuitive and Accessible User Interface:**
+    - **Objective:** Design a visually appealing and user-friendly graphical interface (GUI) that caters to the specific needs of elderly users. The goal is to ensure ease of use, accessibility, and inclusivity.
+    - **Rationale:** Address varying levels of technological familiarity among elderly individuals, making the application inviting and accommodating.
 
-4. **Positive Impact on Mental Health:**
-   - Providing a centralized platform for health data tracking allows individuals and their caregivers to monitor trends over time.
-   - This feature aids in maintaining mental health awareness, fostering a proactive approach to well-being.
+4. **Implement Robust Data Storage for Medication and Reminders:**
+    - **Objective:** Develop robust mechanisms for persistent storage of medication and reminder data. This enables users to access historical information, ensuring continuity of care.
+    - **Rationale:** Guarantee that users can review past medication details and reminders, facilitating long-term health tracking and personalized care.
 
-5. **Facilitation of Caregiver Support:**
-   - The project supports caregivers in ensuring the well-being of their elderly loved ones.
-   - Caregivers can remotely view and manage reminders, offering a collaborative and supportive approach to elderly care.
+5. **Support Collaborative Caregiver Engagement:**
+    - **Objective:** Provide features enabling caregivers to remotely view and manage medication-related information. This fosters collaboration and support for elderly individuals in their medication management.
+    - **Rationale:** Involve caregivers in the well-being of users, creating a collaborative approach to medication management and health tracking.
 
-6. **Integration of Technology and Social Connection:**
-   - The project introduces technology in a user-friendly manner, bridging the digital divide for older individuals.
-   - It incorporates features that encourage social connections, such as shared health data or collaborative reminders.
+6. **Promote Mental Health Awareness through Thoughtful Reminders:**
+    - **Objective:** Implement features that encourage users and caregivers to stay aware of mental health through proactive reminders and insights derived from health data trends.
+    - **Rationale:** Contribute to a holistic well-being approach by promoting mental health awareness alongside considerations for physical health.
 
-## Code Structure
+7. **Address Digital Inclusivity for Older Users:**
+    - **Objective:** Introduce technology in a manner that is accessible and welcoming to older individuals, bridging the digital divide and fostering a sense of inclusivity.
+    - **Rationale:** Promote social connection, reduce isolation, and encourage elderly users to engage with modern tools for their benefit.
 
-### The code is structured as follows:
-
-**amms/__init__.py**
-
-- Implements a Flask web application to manage reminders and health metrics.
-- Imports routes for different functionalities (add, delete, display reminders, health tracker).
-- Initializes the SQLite3 database.
-
-**templates/*.html:**
-- The HTML files provide a simple front-end ui to display information.
-- Sidebar shows upcoming reminders
-- Users can create new medications and reminders
-
-**Note:**
-
-- Data Storage:
-  * Reminders are stored as JSON files (`general_reminders.json`, `medications.json`, `appointments.json`) in app.py and reminder.html.
-   * Health Metrics are stored as JSON file as well `health_data.json` via app.py and health.html.
-
-**Communication:**
-- The `app.py` script uses Flask to create a web interface and the logic is implemented in there.
-
-- The `index.html` file is the main(home) page of the web application. It contains the HTML code for the web interface. It is frontend of the program.
-
-- The `reminder.html` file is the reminder page of the web application. It contains the HTML code for the web interface. It is frontend of the program.
-
-- The `health.html` file is the health metrics page of the web application. It contains the HTML code for the web interface. It is frontend of the program.
-
-This outline provides an overview of the code structure, highlighting key functions, data storage, and the interaction between different components.
+8. **Establish a Collaborative Health Management Ecosystem:**
+    - **Objective:** Create a platform that encourages collaboration among users, caregivers, and potentially healthcare professionals. This aims to establish a supportive health ecosystem.
+    - **Rationale:** Ensure a comprehensive approach to health management, involving multiple stakeholders for the benefit of elderly individuals and fostering a sense of community.
 
 
-## Functionality and Test Results
 
-### Functionalities
-#### 1. **Reminder Management:**
-  - **Functionality:**
-     - Users can add reminders for tasks and appointments.
-     - Reminders are displayed in an organized manner.
-     - Users can delete reminders.
-  - **Test Results:**
-     - **Add Reminder:** Successfully added reminders for various tasks.
-     - **Display Reminders:** Reminders displayed accurately in the form of notification.
-     - **Delete Reminder:** Successfully deleted reminders without errors.
-   ![Alt text](Images/image.png)
-   ![Alt text](Images/image-4.png)
-   ![Alt text](Images/image-5.png)
-#### 2. **Health Data Tracking:**
-  - **Functionality:**
-     - Users can input and track health metrics (blood pressure, heart rate).
-     - Health data is displayed clearly.
-     - Historical health data can be accessed.
-  - **Test Results:**
-     - **Input Health Metrics:** Successfully inputted various health metrics.
-     - **Display Health Data:** Health data displayed accurately in the web app.
-     - **Access Historical Data:** Successfully accessed and reviewed historical health data.
-   ![Alt text](Images/Health_Tracking.png)
+## ❖ Project Significance
+This project is significant as it addresses a real-world problem faced by many elderly individuals - managing complex medication schedules. By providing a tool that assists in this task, the project contributes to the overall health and well-being of its users, ultimately enhancing their quality of life.
 
-#### 3. **User-Friendly Web GUI:**
-  - **Functionality:**
-     - Web app is designed to be intuitive and accessible.
-     - Clear navigation for all functionalities.
-  - **Test Results:**
-     - **Intuitiveness:** Users found the application easy to navigate and understand.
-     - **Accessibility:** application accommodates varying levels of technological familiarity.
-   ![Alt text](Images/image-1.png)
-   ![Alt text](Images/image-2.png)
-   ![Alt text](Images/image-3.png)
-#### 4. **Bridging Digital Divide:**
-   - **Functionality:**
-     - Technology introduced in an accessible manner.
-     - User-friendly design for older individuals.
-   - **Test Results:**
-     - **Accessibility:** Users of varying technological familiarity successfully engaged with the system.
-     - **Inclusivity:** Project successfully bridged the digital divide.
+1. **Empowering Medication Independence:**
+    - The robust user authentication system, implemented using Flask-Login, empowers elderly users to independently manage their medications. The secure sign-up and login process ensures a personalized and private space for users to create and adhere to their medication schedules.
 
-## Discussion and Conclusions
+2. **Comprehensive Medication Tracking:**
+    - The project's sophisticated system for medication tracking, implemented in the `Medication` model, allows users to record and review detailed medication information, including name, dose, date, and time. This feature contributes to a comprehensive approach to health management.
+
+3. **Accessible User Interface for the Elderly:**
+    - The design of an intuitive graphical user interface (GUI) caters specifically to the needs of elderly users, promoting accessibility and inclusivity. This user-friendly interface ensures that individuals with varying levels of technological familiarity can easily navigate and utilize the application.
+
+4. **Persistent Data Storage for Continuity of Care:**
+    - The implementation of persistent data storage mechanisms ensures that users can access historical medication and reminder data. This feature, seen in the usage of SQLAlchemy in the `Medication` and `Reminder` models, facilitates continuity of care and supports long-term health tracking.
+
+5. **Remote Caregiver Collaboration:**
+    - Features enabling caregivers to remotely view and manage medication-related information enhance collaborative care. The implementation allows caregivers to actively participate in the well-being of users, providing support and assistance as needed.
+
+6. **Promoting Mental Health Awareness:**
+    - The project's emphasis on mental health awareness is evident through features that encourage users and caregivers to stay aware of mental health. Proactive reminders and insights derived from health data trends contribute to a holistic approach to well-being.
+
+7. **Addressing the Digital Divide:**
+    - The introduction of technology in an accessible manner bridges the digital divide for older individuals. This not only facilitates technology adoption but also promotes social connection, reducing feelings of isolation among elderly users.
+
+8. **Creating a Supportive Health Ecosystem:**
+    - The collaborative features in the project establish a supportive health ecosystem. Involving caregivers and potentially healthcare professionals ensures a comprehensive and well-rounded approach to health management, benefiting the elderly user community.
+
+In summary, this project is not merely a technical solution but a compassionate and tailored initiative that directly addresses the unique challenges faced by the elderly population. Its significance lies in offering practical solutions that improve overall health, autonomy, and the quality of life for users, making a positive and meaningful impact on the community it serves.
+
+
+## ❖ Code Structure
+### User Blueprint
+
+#### `forms.py`
+
+- Manages user-related forms for registration, login, account update, password reset, and reset confirmation.
+- Utilizes Flask-WTF for form creation and validation.
+- Forms include:
+  - `RegistrationForm`: Handles user registration.
+  - `LoginForm`: Manages user login.
+  - `UpdateAccountForm`: Allows users to update their account details.
+  - `RequestResetForm`: Manages the request for password reset.
+  - `ResetPasswordForm`: Handles the password reset process.
+
+#### `routes.py`
+
+- Manages user-related routes for registration, login, logout, account management, password reset, and reset confirmation.
+- Utilizes Flask routes for defining endpoints.
+- Routes include:
+  - `/register`: Handles user registration.
+  - `/login`: Manages user login.
+  - `/logout`: Allows users to log out.
+  - `/account`: Handles user account management.
+  - `/reset_password`: Manages the request for password reset.
+  - `/reset_password/<token>`: Handles the password reset confirmation.
+
+### Medication Blueprint
+
+#### `forms.py`
+
+- Manages forms related to medication, specifically for adding new medications.
+- Utilizes Flask-WTF for form creation and validation.
+- Forms include:
+  - `NewMedicationForm`: Allows users to input details for a new medication.
+
+#### `routes.py`
+
+- Manages medication-related routes for viewing all medications, adding new medications, and deleting medications.
+- Utilizes Flask routes for defining endpoints.
+- Routes include:
+  - `/allMed`: Displays a list of all medications.
+  - `/newMed`: Handles the addition of a new medication.
+  - `/deleteMed/<int:id>`: Manages the deletion of a medication.
+
+### Reminder Blueprint
+
+#### `routes.py`
+
+- Manages routes related to reminders, including viewing reminders and adding new ones.
+- Utilizes Flask routes for defining endpoints.
+- Routes include:
+  - `/reminderHome`: Displays a list of reminders.
+  - `/add_reminder`: Manages the addition of a new reminder.
+
+### Main Application (`amms`)
+
+#### `__init__.py`
+
+- Initializes the Flask application and connects it with the database, bcrypt, and Flask-Login.
+- Registers blueprints for user, main, medication, and reminder functionalities.
+- Starts a separate thread for a reminder handler, allowing for asynchronous reminder notifications.
+
+### Database Models
+
+- `User`: Defines the structure of the user database table for storing user information.
+- `Medication`: Defines the structure of the medication database table for storing medication details.
+- `Reminder`: Defines the structure of the reminder database table for storing reminder data.
+
+### Core Configurations
+
+- Utilizes Flask extensions such as Flask-SQLAlchemy, Flask-Bcrypt, and Flask-Login for essential functionalities.
+- `Config` class manages configuration settings for the application.
+
+### Healthcare Management System Logic
+
+- Core logic for managing healthcare-related functionalities is distributed across the user, medication, and reminder blueprints.
+- Each blueprint encapsulates related functionalities, ensuring a modular and organized code structure.
+
+### Front-end
+- With the use of the `templates` and the `styles` folder. This flask application offers a user-friendly front-end interface, which allows for the elderly to navigate through different pages, operating different tasks such as reminders, medications, etc.
+
+### Explanations
+
+- **Blueprints and Routes:**
+  - Blueprints in Flask help modularize the application, allowing for separation of concerns. Each blueprint handles specific functionalities.
+  - Routes define the endpoints where users can access different features and functionalities.
+
+- **Forms:**
+  - Flask-WTF forms ensure data integrity and security by validating and processing user inputs before interacting with the database.
+
+- **Database Models:**
+  - Models define the structure of database tables, enabling efficient storage and retrieval of data. SQLAlchemy facilitates database interactions.
+
+- **Core Configurations:**
+  - Utilizes Flask extensions to enhance the core functionalities of the application.
+
+- **Threading:**
+  - Implements threading to handle asynchronous tasks, such as the reminder handler running in the background.
+
+- **Code Flow:**
+  - The application follows a logical flow where users can navigate through routes to perform actions such as authentication, medication management, and reminder creation.
+
+This structure ensures a modular, organized, and maintainable codebase, making it easier to extend and enhance the functionality of the healthcare management system. Each component has a well-defined responsibility, contributing to a cohesive and scalable application architecture.
+
+
+
+## ❖ Functionality and Test Results
+### 1. User Authentication:
+
+#### Functionality:
+- **Objective:** Implement user signup and login functionality using Flask-Login.
+- **Details:** Users can register an account, log in, and access personalized features.
+
+#### Test Results:
+
+**Test 1: User Registration**
+- **Steps:**
+  1. Navigate to the registration page.
+  2. Fill in valid registration details.
+  3. Click the "Sign Up" button.
+- **Expected Result:** User account is created, and a success message is displayed.
+
+![User Registration](url_to_image)
+
+**Test 2: User Login**
+- **Steps:**
+  1. Navigate to the login page.
+  2. Enter valid login credentials.
+  3. Click the "Login" button.
+- **Expected Result:** User is successfully logged in, and the home page is displayed.
+
+![User Login](url_to_image)
+
+### 2. Medication Management:
+
+#### Functionality:
+- **Objective:** Enable users to add, view, and delete medications.
+- **Details:** Users can input medication details, view a list of medications, and delete entries.
+
+#### Test Results:
+
+**Test 3: Add New Medication**
+- **Steps:**
+  1. Access the "New Medication" page.
+  2. Fill in medication details.
+  3. Click the "Enter" button.
+- **Expected Result:** The medication is added, and a success message is shown.
+
+![Add New Medication](url_to_image)
+
+**Test 4: View Medication List**
+- **Steps:**
+  1. Navigate to the "All Medications" page.
+- **Expected Result:** A paginated list of medications is displayed.
+
+![View Medication List](url_to_image)
+
+**Test 5: Delete Medication**
+- **Steps:**
+  1. Click on the "Delete" button next to a medication entry.
+- **Expected Result:** The selected medication is deleted, and a success message is shown.
+
+![Delete Medication](url_to_image)
+
+### 3. Reminder System:
+
+#### Functionality:
+- **Objective:** Implement a reminder system for medication schedules.
+- **Details:** Users receive reminders at specified times for their medication.
+
+#### Test Results:
+
+**Test 6: Add Reminder**
+- **Steps:**
+  1. Access the "Add Reminder" functionality.
+  2. Set a reminder time and message.
+  3. Click the "Add Reminder" button.
+- **Expected Result:** The reminder is added, and the user receives a notification at the specified time.
+
+![Add Reminder](url_to_image)
+
+**Test 7: Reminder Notification**
+- **Steps:**
+  1. Wait for a scheduled reminder time.
+- **Expected Result:** A system notification is displayed with the reminder message.
+
+![Reminder Notification](url_to_image)
+
+### 4. User Account Management:
+
+#### Functionality:
+- **Objective:** Enable users to update their account details.
+- **Details:** Users can modify their username and email.
+
+#### Test Results:
+
+**Test 8: Update Account Details**
+- **Steps:**
+  1. Access the "Account" page.
+  2. Modify username or email.
+  3. Click the "Update" button.
+- **Expected Result:** The account details are updated, and a success message is displayed.
+
+## ❖ Discussion and Conclusions
+
+## ❖ Discussion and Conclusions
 
 ### Project Issues and Limitations:
 
-During the development process, the team encountered a few challenges and limitations, including:
-- Integration complexities while synchronizing reminders with different time zones.
-- Ensuring a seamless user experience across various devices and screen sizes.
+#### Authentication Security:
+- While the project implements user authentication, it's crucial to continually monitor and update security measures. Regular security audits and the incorporation of additional layers, such as two-factor authentication, could enhance user account protection.
+
+#### Reminder Notification Reliability:
+- The reminder notification system, relying on subprocess calls and periodic checks, may face reliability issues, especially in high-traffic scenarios. Exploring more robust notification mechanisms and handling edge cases could enhance the reliability of reminders.
+
 
 ### Application of Course Learnings:
 
-The project benefited significantly from the learnings acquired during the course:
-- Implemented robust algorithms for reminder notifications based on scheduling principles learned in class.
-- Employed secure authentication methods and data encryption techniques covered in course modules.
-- Implemented OS concepts such as threads, file handling, and synchronization to ensure concurrent operations without data loss.
+#### Flask Framework Proficiency:
+- The project showcases a solid understanding and application of the Flask web framework, leveraging its features such as blueprints, routes, forms, and database models effectively. This proficiency reflects the successful assimilation of course learnings.
+
+#### Database Design and ORM:
+- The use of SQLAlchemy for database management and ORM principles is evident in the well-defined models for users, medications, and reminders. Understanding how to structure and interact with databases aligns with the database design principles covered in the course.
+
+#### Threading for Background Tasks:
+- The implementation of threading for the reminder handler demonstrates the application of concurrent programming concepts. This aligns with the course teachings on handling background tasks asynchronously to maintain a responsive application.
+
+#### User Authentication with Flask-Login:
+- The incorporation of Flask-Login for user authentication reflects an understanding of secure user management. Utilizing Flask-Login aligns with the course emphasis on implementing secure authentication mechanisms in web applications.
 
 ### Future Improvements:
 
-For future iterations, the following enhancements or features could be considered:
-- Incorporating AI-based predictive analysis for health trends based on input health metrics.
-- Implementing a more intuitive and customizable user interface to cater to individual preferences.
+#### Enhanced Medication Tracking:
+- Introduce more advanced medication tracking features, such as dosage history and adherence statistics. This could provide users with a comprehensive overview of their medication management.
 
+#### Integration of Health Metrics:
+- Extend the application to include the tracking of additional health metrics beyond medication, such as blood pressure, heart rate, and other relevant data. This expansion aligns with the goal of creating a holistic health management system.
 
+#### User Interface Refinement:
+- Invest in further refining the user interface to ensure a seamless and intuitive user experience. Incorporate user feedback to enhance usability and accessibility, especially for elderly users.
+
+#### Robust Testing Suite:
+- Develop a comprehensive testing suite covering unit tests, integration tests, and end-to-end tests. This will help identify and address potential issues early in the development process, contributing to a more reliable and maintainable application.
+
+#### Collaborative Features:
+- Explore features that facilitate collaboration among users, caregivers, and healthcare professionals. This could involve secure data sharing, real-time updates, and communication functionalities to create a collaborative health ecosystem.
+
+#### Automated Testing and Continuous Integration:
+- Implement automated testing and continuous integration practices to streamline the development process. This ensures that new code changes are thoroughly tested and integrated seamlessly, reducing the risk of introducing bugs.
+
+#### Machine Learning for Adherence Prediction:
+- Consider integrating machine learning algorithms to predict medication adherence based on historical data. This predictive capability could provide proactive reminders and insights into potential adherence challenges.
+
+#### Accessibility Considerations:
+- Place a strong emphasis on accessibility considerations, especially for elderly users. Ensure that the application complies with accessibility standards, making it inclusive and usable for individuals with diverse needs.
+
+In conclusion, while the project demonstrates a solid foundation, future improvements can further elevate its capabilities, user experience, and overall impact on healthcare management. Addressing identified limitations and embracing continuous improvement will contribute to the project's long-term success and relevance.
