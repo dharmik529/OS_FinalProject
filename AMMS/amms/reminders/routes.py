@@ -37,3 +37,12 @@ def add_reminder():
         rems.append({'time': time, 'message': message})
     
     return redirect(url_for('reminder.reminderHome'))
+
+@reminder.route("/post/<int:rem_id>/delete", methods=['POST'])
+def del_reminder(rem_id):
+    reminder = Reminder.query.get_or_404(rem_id)
+    db.session.delete(reminder)
+    db.session.commit()
+    flash('Your reminder has been deleted!', 'success')
+    return redirect(url_for('reminder.reminderHome'))
+

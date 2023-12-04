@@ -23,11 +23,11 @@ def newMedication():
         return redirect(url_for('medication.home'))
     return render_template('newMedication.html', title='Register', form=form)
 
-@medication.route("/deleteMed/<int:id>", methods=['GET', 'POST'])
-def delMedication():
-    medication = Medication.query.get_or_404(id)
+@medication.route("/deleteMed/<int:medication_id>", methods=['GET', 'POST'])
+def deleteMed(medication_id):
+    medication = Medication.query.get_or_404(medication_id)
 
     db.session.delete(medication)
     db.session.commit()
-    flash('Your post has been deleted!', 'success')
+    flash('Your medication has been deleted!', 'success')
     return redirect(url_for('medication.home'))

@@ -8,6 +8,9 @@
             </div>
             <h2><a class="article-title">{{ med.medication_name }}</a></h2>
             <p class="article-content">{{ med.medication_dose }}</p>
+            <form action="{{ url_for('medication.deleteMed', medication_id=med.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
           </div>
         </article>
     {% endfor %}

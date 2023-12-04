@@ -276,7 +276,7 @@ This structure ensures a modular, organized, and maintainable codebase, making i
   3. Click the "Sign Up" button.
 - **Expected Result:** User account is created, and a success message is displayed.
 
-![User Registration](url_to_image)
+![User Registration](Images/Registration.png)
 
 **Test 2: User Login**
 - **Steps:**
@@ -285,7 +285,7 @@ This structure ensures a modular, organized, and maintainable codebase, making i
   3. Click the "Login" button.
 - **Expected Result:** User is successfully logged in, and the home page is displayed.
 
-![User Login](url_to_image)
+![User Login](Images/Login.png)
 
 ### 2. Medication Management:
 
@@ -302,7 +302,7 @@ This structure ensures a modular, organized, and maintainable codebase, making i
   3. Click the "Enter" button.
 - **Expected Result:** The medication is added, and a success message is shown.
 
-![Add New Medication](url_to_image)
+![Add New Medication](Images/NewMedication.png)
 
 **Test 4: View Medication List**
 - **Steps:**
@@ -316,7 +316,7 @@ This structure ensures a modular, organized, and maintainable codebase, making i
   1. Click on the "Delete" button next to a medication entry.
 - **Expected Result:** The selected medication is deleted, and a success message is shown.
 
-![Delete Medication](url_to_image)
+![Delete Medication](Images/DeleteMedication.png)
 
 ### 3. Reminder System:
 
@@ -333,14 +333,14 @@ This structure ensures a modular, organized, and maintainable codebase, making i
   3. Click the "Add Reminder" button.
 - **Expected Result:** The reminder is added, and the user receives a notification at the specified time.
 
-![Add Reminder](url_to_image)
+![Add Reminder](Images/NewReminder.png)
 
 **Test 7: Reminder Notification**
 - **Steps:**
   1. Wait for a scheduled reminder time.
 - **Expected Result:** A system notification is displayed with the reminder message.
 
-![Reminder Notification](url_to_image)
+![Reminder Notification]()
 
 ### 4. User Account Management:
 
